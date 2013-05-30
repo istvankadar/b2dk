@@ -46,6 +46,30 @@
             B2dK.prototype.body  = null;
             B2dK.prototype.shape = null;
 
+
+            /**
+            *
+            * Ths function get a shape definition as parameter and creates a Kinetic shape (currentShape) 
+            * and a Box2d body (currentBody) and encapsulate them into a B2DK object.
+            *
+            *   Sample shape definition:
+            *   {
+            *       shapeName: 'circle', 
+            *       config: { 
+            *           radius: 40, 
+            *           x: 5, 
+            *           y: 5, 
+            *           fill: 'red',
+            *           stroke: 'black',
+            *           strokeWidth: defaultStrokeWidth,
+            *           draggable: true
+            *       }
+            *   }
+            *
+            *
+            * @param {Object} shapedef Shape definition
+            * @returns {B2DK}
+            */
             function B2dKFactory(shapeDef) {
 
                var currentShape;
