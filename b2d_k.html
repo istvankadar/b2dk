@@ -61,6 +61,15 @@
                   this.body.SetUserData(userData);
              }
 
+             var shapeDragmove = function(e) {
+
+                  var userData = this.body.GetUserData();
+
+                  userData.dragX = e.layerX / scale;
+                  userData.dragY = e.layerY / scale;
+
+                  this.body.SetUserData(userData);
+             }
 
 
             var world = new Box2D.Dynamics.b2World(
@@ -180,21 +189,7 @@
 
                currentShape.on('dragstart touchstart', shapeDragstart);
                currentShape.on('dragend touchend', shapeDragend);
-
-
-
-               currentShape.on('dragmove touchmove', function(e){
-
-//console.log("Moved");
-
-                  var userData = this.body.GetUserData();
-
-                  userData.dragX = e.layerX / scale;
-                  userData.dragY = e.layerY / scale;
-
-                  this.body.SetUserData(userData);
-
-               });
+               currentShape.on('dragmove touchmove', shapeDragmove);
 
 
 
