@@ -141,9 +141,9 @@
                var currentShape;
 
                var fixDef = new Box2D.Dynamics.b2FixtureDef;
-               fixDef.density = 0.1;
-               fixDef.friction = 0.6;
-               fixDef.restitution = 0.5;
+               fixDef.density     = shapeDef.fixDef.density;
+               fixDef.friction    = shapeDef.fixDef.friction;
+               fixDef.restitution = shapeDef.fixDef.restitution;
 
                var bodyDef = new Box2D.Dynamics.b2BodyDef;
                bodyDef.type = Box2D.Dynamics.b2Body.b2_dynamicBody;
@@ -258,7 +258,13 @@
                      stroke: 'black',
                      strokeWidth: defaultStrokeWidth,
                      draggable: true
+                  },
+                  fixDef: {
+                       density:  0.1,
+                       friction:  0.6,
+                       restitution:  0.5,
                   }
+
                });
                ud = a.body.GetUserData();
                ud.objName = 'AAA';
@@ -275,6 +281,11 @@
                      stroke: 'black',
                      strokeWidth: defaultStrokeWidth,
                      draggable: true
+                  },
+                  fixDef: {
+                       density:  0.1,
+                       friction:  0.6,
+                       restitution:  0.5,
                   }
                });
                ud = b.body.GetUserData();
@@ -310,6 +321,11 @@ joint = NULL;
                      stroke: 'black',
                      strokeWidth: defaultStrokeWidth,
                      draggable: true
+                  },
+                  fixDef: {
+                       density:  0.1,
+                       friction:  0.6,
+                       restitution:  0.5,
                   }
                });
                ud = c.body.GetUserData();
@@ -327,6 +343,11 @@ joint = NULL;
                      stroke: 'black',
                      strokeWidth: defaultStrokeWidth,
                      draggable: true
+                  },
+                  fixDef: {
+                       density:  0.1,
+                       friction:  0.6,
+                       restitution:  0.5,
                   }
                });
                ud = d.body.GetUserData();
