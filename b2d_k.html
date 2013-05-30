@@ -17,6 +17,35 @@
 
          $(document).ready(function(){
 
+             var shapeDragstart = function(e) {
+                var userData = this.body.GetUserData();
+
+                if(userData.dragged === false) {
+
+                    userData.dragged = true;
+                    this.attrs.dragged = true;
+
+                    userData.dragX = e.layerX / scale;
+                    userData.dragY = e.layerY / scale;
+
+                    var md = new Box2D.Dynamics.Joints.b2MouseJointDef();
+                    md.bodyA = world.GetGroundBody();
+                    md.bodyB = this.body;
+                    md.target.Set(userData.dragX, userData.dragY);
+                    md.collideConnected = true;
+                    md.maxForce = 8000.0 * this.body.GetMass();
+                    userData.mouseJoint = world.CreateJoint(md);
+                    this.body.SetAwake(true);
+
+                    this.setFill('blue');
+
+                    this.body.SetUserData(userData);
+
+                }
+
+             }
+
+
             var world = new Box2D.Dynamics.b2World(
                   new Box2D.Common.Math.b2Vec2(0, 1)    //gravity
                ,  true                                   //allow sleep
@@ -137,40 +166,7 @@
 
 
 
-               currentShape.on('dragstart touchstart', function(e){
-
-console.log("Started");
-
-                  // var userData = e.shape.body.GetUserData();
-                  var userData = this.body.GetUserData();
-
-                  if(userData.dragged === false) {
-
-                     userData.dragged = true;
-                     this.attrs.dragged = true;
-
-                     userData.dragX = e.layerX / scale;
-                     userData.dragY = e.layerY / scale;
-
-                     var md = new Box2D.Dynamics.Joints.b2MouseJointDef();
-                     md.bodyA = world.GetGroundBody();
-                     md.bodyB = this.body;
-                     md.target.Set(userData.dragX, userData.dragY);
-                     md.collideConnected = true;
-                     md.maxForce = 8000.0 * this.body.GetMass();
-                     userData.mouseJoint = world.CreateJoint(md);
-                     this.body.SetAwake(true);
-
-
-                     this.setFill('blue');
-
-                     this.body.SetUserData(userData);
-
-                  }
-
-
-
-               });
+               currentShape.on('dragstart touchstart', shapeDragstart);
 
 
                currentShape.on('dragend touchend', function(e){
