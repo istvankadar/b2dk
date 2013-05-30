@@ -94,6 +94,17 @@
 
             // B2dK is the class that binds Box2d and Kinetic classes together
             function B2dK(shape, body){
+
+               shape.body = body;
+
+               body.SetUserData( {
+                  shape: shape
+                  , dragged: false
+                  , mouseJoint: null
+                  , dragX: null
+                  , dragY: null
+               } );
+
                this.shape = shape;
                this.body  = body;
             }
@@ -191,24 +202,7 @@
                currentShape.on('dragend touchend', shapeDragend);
                currentShape.on('dragmove touchmove', shapeDragmove);
 
-
-
-
-
-
-
-
-               currentShape.body = currentBody;
-
-
                currentBody.CreateFixture(fixDef);
-               currentBody.SetUserData( {
-                  shape: currentShape
-                  , dragged: false
-                  , mouseJoint: null
-                  , dragX: null
-                  , dragY: null
-               } );
 
                return new B2dK(currentShape, currentBody);
             }
