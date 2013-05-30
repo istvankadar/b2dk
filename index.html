@@ -1,0 +1,404 @@
+<html>
+   <head>
+      <title>Box2dWeb Demo</title>
+      <style>
+
+         body{
+            margin: 0px;
+         }
+
+         #theDiv{
+            color: #ffffaa;
+            text-shadow: 0px 0px 1px #ffffaa;
+            cursor: pointer;
+         }
+         #theDiv2{
+            color: #ffffaa;
+            text-shadow: 0px 0px 1px #ffffaa;
+            cursor: pointer;
+         }
+
+        #kinetic-container {
+            height: 300px;
+            background-color: #222;
+            margin-bottom: 20px;
+            float: left;
+            width: 1200px;
+        }
+
+      </style>
+   </head>
+   <body onload="init();">
+      <div id="kinetic-container" width="1200" height="400" style="background-color:#222222;" ></div>
+      <canvas id="canvas" width="1200" height="300" style="background-color:#333333; display: none" ></canvas>
+   </body>
+
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+   <script src="kinetic/kinetic.js"></script>
+
+   <script type="text/javascript" src="Box2dWeb-2.1.a.3.js"></script>
+   <script type="text/javascript">
+
+      var debug = true;
+
+      var kinetic = {
+   
+         stage: null,
+
+         initStage: function(){
+   
+            this.stage = new Kinetic.Stage({
+               container: 'kinetic-container',
+               width: 1200,
+               height: 300
+            });
+
+            //return stage;
+         }
+   
+      }
+
+      var b2d = {
+
+         b2World: Box2D.Dynamics.b2World,
+         b2Vec2: Box2D.Common.Math.b2Vec2,
+         b2Vec2: Box2D.Common.Math.b2Vec2,
+         b2AABB: Box2D.Collision.b2AABB,
+         b2BodyDef: Box2D.Dynamics.b2BodyDef,
+         b2Body: Box2D.Dynamics.b2Body,
+         b2FixtureDef: Box2D.Dynamics.b2FixtureDef,
+         b2Fixture: Box2D.Dynamics.b2Fixture,
+         b2World: Box2D.Dynamics.b2World,
+         b2MassData: Box2D.Collision.Shapes.b2MassData,
+         b2PolygonShape: Box2D.Collision.Shapes.b2PolygonShape,
+         b2CircleShape: Box2D.Collision.Shapes.b2CircleShape,
+         b2DebugDraw: Box2D.Dynamics.b2DebugDraw,
+         b2MouseJointDef:  Box2D.Dynamics.Joints.b2MouseJointDef,
+
+         world: null,
+
+         createWorld: function(gX, gY){
+            this.world = new this.b2World(
+                  new this.b2Vec2(gX, gY) 
+               ,  true                 //allow sleep
+            );
+         },
+
+         createDesk: function(){         
+
+            var ratio = 30;
+
+            var fixDef = new this.b2FixtureDef;
+            fixDef.density = 0.1;
+            fixDef.friction = 0.6;
+            fixDef.restitution = 0.5;
+            
+            var bodyDef = new this.b2BodyDef;
+            
+            //create ground
+            bodyDef.type = this.b2Body.b2_staticBody;
+            fixDef.shape = new this.b2PolygonShape;
+
+
+            fixDef.shape.SetAsBox(20/ratio, 1/ratio);
+
+            bodyDef.position.Set(10, 300 / 30 + 1.8);
+            this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+            bodyDef.position.Set(1, 1);
+            this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+            fixDef.shape.SetAsBox(1/ratio, 1/ratio);
+
+            bodyDef.position.Set(1/ratio, 1/ratio);
+            this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+            bodyDef.position.Set(41.8, 13);
+            this.world.CreateBody(bodyDef).CreateFixture(fixDef);
+         }
+
+      }
+
+      function init() {
+
+         var   b2Vec2 = Box2D.Common.Math.b2Vec2
+            ,  b2AABB = Box2D.Collision.b2AABB
+            ,  b2BodyDef = Box2D.Dynamics.b2BodyDef
+            ,  b2Body = Box2D.Dynamics.b2Body
+            ,  b2FixtureDef = Box2D.Dynamics.b2FixtureDef
+            ,  b2Fixture = Box2D.Dynamics.b2Fixture
+            ,  b2World = Box2D.Dynamics.b2World
+            ,  b2MassData = Box2D.Collision.Shapes.b2MassData
+            ,  b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape
+            ,  b2CircleShape = Box2D.Collision.Shapes.b2CircleShape
+            ,  b2DebugDraw = Box2D.Dynamics.b2DebugDraw
+            ,  b2MouseJointDef =  Box2D.Dynamics.Joints.b2MouseJointDef
+            ;
+
+
+         // create  box2d world
+         var gravityX = 0
+             gravityY = 0;
+
+         var numberOfObjects = 10;
+
+
+         if (debug === true) {
+            $('#canvas').show();
+         }
+
+         // crate stage and add the layer to it
+         kinetic.initStage();
+         var layer = new Kinetic.Layer();
+         kinetic.stage.add(layer);
+
+
+         // create box2D world
+         b2d.createWorld(gravityX, gravityY); 
+
+
+         b2d.createDesk();
+
+         // var fixDef = new b2FixtureDef;
+         // fixDef.density = 0.1;
+         // fixDef.friction = 0.6;
+         // fixDef.restitution = 0.5;
+         
+         // var bodyDef = new b2BodyDef;
+         
+         // //create ground
+         // bodyDef.type = b2Body.b2_staticBody;
+         // fixDef.shape = new b2PolygonShape;
+
+
+         // fixDef.shape.SetAsBox(30, 2);
+
+         // bodyDef.position.Set(10, 300 / 30 + 1.8);
+         // world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+         // bodyDef.position.Set(10, -1.8);
+         // world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+         // fixDef.shape.SetAsBox(2, 14);
+
+         // bodyDef.position.Set(-1.8, 13);
+         // world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+         // bodyDef.position.Set(41.8, 13);
+         // world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+
+
+         var fixDef = new b2FixtureDef;
+         fixDef.density = 0.1;
+         fixDef.friction = 0.6;
+         fixDef.restitution = 0.5;
+
+         var bodyDef = new b2BodyDef;
+
+         
+         
+         //create some objects
+         bodyDef.type = b2Body.b2_dynamicBody;
+
+         for(var i = 0; i < numberOfObjects; ++i) {
+
+            var currentBody;
+            var currentCircle;
+
+            // if(Math.random() > 0.5) {
+            //    fixDef.shape = new b2PolygonShape;
+            //    fixDef.shape.SetAsBox(
+            //          Math.random() + 0.1 //half width
+            //       ,  Math.random() + 0.1 //half height
+            //    );
+            // } else {
+               var rad = Math.random() + 1.1;
+               fixDef.shape = new b2CircleShape(
+                  rad
+               );
+               catBits = parseInt(Math.random()*3);
+               fixDef.filter.categoryBits = catBits;
+//               fixDef.filter.groupIndex = -1 * catBits;
+               console.log(['#ff0000', '#00ff00', '#1111ff'][catBits]);
+            // }
+            bodyDef.position.x = Math.random() * 40;
+            bodyDef.position.y = Math.random() * 10;
+            currentBody = b2d.world.CreateBody(bodyDef)
+            currentBody.CreateFixture(fixDef);
+
+            currentCircle = new Kinetic.Circle({
+               x: kinetic.stage.getWidth() / 2,
+               y: kinetic.stage.getHeight() / 2,
+               radius: rad * 30,
+               fill: ['#ff0000', '#00ff00', '#0000ff'][catBits],
+               stroke: 'black',
+               strokeWidth: 4,
+               draggable: true
+            });
+
+            currentCircle.on('dragstart touchstart', function(e){
+               var userData = e.shape.body.GetUserData();
+
+               if(userData.dragged === false) {
+
+                  userData.dragged = true;
+
+                  userData.dragX = e.layerX / 30;
+                  userData.dragY = e.layerY / 30;
+
+                  var md = new b2MouseJointDef();
+                  md.bodyA = b2d.world.GetGroundBody();
+                  md.bodyB = e.shape.body;
+                  md.target.Set(userData.dragX, userData.dragY);
+                  md.collideConnected = true;
+                  md.maxForce = 8000.0 * e.shape.body.GetMass();
+                  userData.mouseJoint = b2d.world.CreateJoint(md);
+                  e.shape.body.SetAwake(true);
+
+
+                  e.shape.setFill('blue');
+
+                  e.shape.body.SetUserData(userData);
+
+               }
+
+
+
+            });
+
+            currentCircle.on('dragend touchend', function(e){
+               var userData = e.shape.body.GetUserData();
+               userData.dragged = false;
+
+               b2d.world.DestroyJoint(userData.mouseJoint);
+               userData.mouseJoint = null;
+               userData.dragX = e.shape.body.getX;
+               userData.dragY = e.shape.body.getY;
+
+               e.shape.setFill('red');
+
+               e.shape.body.SetUserData(userData);
+               console.log(userData.dragged);
+            });
+
+
+            currentCircle.on('dragmove touchmove', function(e){
+               var userData = e.shape.body.GetUserData();
+
+               //userData.dragged = (e.webkitMovementX !== 0 && e.webkitMovementY != 0);
+
+               //userData.mouseJoint.SetTarget(new b2Vec2(e.layerX / 30, e.layerY / 30));
+               userData.dragX = e.layerX / 30;
+               userData.dragY = e.layerY / 30;
+
+               e.shape.body.SetUserData(userData);
+
+//               console.log(e.layerX / 30, e.layerY / 30);
+               //console.log(e.webkitMovementX, e.webkitMovementY);
+            });
+
+
+            currentCircle.body = currentBody;
+            currentBody.SetUserData( {
+               shape: currentCircle
+               , dragged: false
+               , mouseJoint: null
+               , dragX: null
+               , dragY: null
+            } );
+
+
+            // add the shape to the layer
+            layer.add(currentCircle);
+
+
+         }
+         
+         // setup debug draw
+      if (debug === true) {
+         var debugDraw = new b2DebugDraw();
+         debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
+         debugDraw.SetDrawScale(30.0);
+         debugDraw.SetFillAlpha(0.5);
+         debugDraw.SetLineThickness(1.0);
+         debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+         b2d.world.SetDebugDraw(debugDraw);
+      }         
+         
+         window.setInterval(update, 1000 / fps);
+         
+         //mouse
+         
+         //var mouseX, mouseY, mousePVec, isMouseDown, selectedBody, mouseJoint;
+         //var canvasPosition = getElementPosition(document.getElementById("canvas"));
+         
+var radius = 1.5;
+var fps = 60;
+var theDiv = document.getElementById('theDiv');
+
+         function update() {
+
+            var BodyCount = b2d.world.GetBodyCount();
+            var currentBody = b2d.world.GetBodyList();
+            var currentUserData;
+
+            while (currentBody !== null && (currentUserData = currentBody.GetUserData()) !== null ) {
+
+               //console.log(currentUserData.dragged);
+
+
+               if( currentUserData.dragged === true ) {
+                  currentUserData.mouseJoint.SetTarget(new b2Vec2(currentUserData.dragX, currentUserData.dragY));
+               }
+
+               var wp = currentBody.GetWorldPoint({x:0, y:0});
+               currentUserData.shape.setY(wp.y * 30);
+               currentUserData.shape.setX(wp.x * 30);
+
+               currentBody = currentBody.GetNext();
+
+            }
+
+            layer.draw();
+
+
+
+            //world.Step(1 / fps, 5, 2);
+            b2d.world.Step(1 / fps, 10, 10);
+            if (debug === true) {
+               b2d.world.DrawDebugData();
+            }
+            b2d.world.ClearForces();
+         };
+         
+         //helpers
+         
+         //http://js-tut.aardon.de/js-tut/tutorial/position.html
+         function getElementPosition(element) {
+            var elem=element, tagname="", x=0, y=0;
+           
+            while((typeof(elem) == "object") && (typeof(elem.tagName) != "undefined")) {
+               y += elem.offsetTop;
+               x += elem.offsetLeft;
+               tagname = elem.tagName.toUpperCase();
+
+               if(tagname == "BODY")
+                  elem=0;
+
+               if(typeof(elem) == "object") {
+                  if(typeof(elem.offsetParent) == "object")
+                     elem = elem.offsetParent;
+               }
+            }
+
+            return {x: x, y: y};
+         }
+
+
+      };
+   
+   </script>
+   
+   
+</html>
