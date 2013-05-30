@@ -45,6 +45,23 @@
 
              }
 
+             var shapeDragend = function(e) {
+
+                  var userData = this.body.GetUserData();
+                  userData.dragged = false;
+                  this.attrs.dragged = false;
+
+                  world.DestroyJoint(userData.mouseJoint);
+                  userData.mouseJoint = null;
+                  userData.dragX = this.body.getX;
+                  userData.dragY = this.body.getY;
+
+                  this.setFill('red');
+
+                  this.body.SetUserData(userData);
+             }
+
+
 
             var world = new Box2D.Dynamics.b2World(
                   new Box2D.Common.Math.b2Vec2(0, 1)    //gravity
@@ -161,30 +178,8 @@
                   throw "Unknown shape: " + shapeDef.shapeName;
                }
 
-
-
-
-
-
                currentShape.on('dragstart touchstart', shapeDragstart);
-
-
-               currentShape.on('dragend touchend', function(e){
-
-                  var userData = this.body.GetUserData();
-                  userData.dragged = false;
-                  this.attrs.dragged = false;
-
-                  world.DestroyJoint(userData.mouseJoint);
-                  userData.mouseJoint = null;
-                  userData.dragX = this.body.getX;
-                  userData.dragY = this.body.getY;
-
-                  this.setFill('red');
-
-                  this.body.SetUserData(userData);
-//                  console.log(userData.dragged);
-               });
+               currentShape.on('dragend touchend', shapeDragend);
 
 
 
