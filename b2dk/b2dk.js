@@ -104,7 +104,8 @@ var layer;
             fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
         } else if (shapeDef.shapeName === 'rect') {
             currentShape = new Kinetic.Rect(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2PolygonShape;
+            fixDef.shape.SetAsBox(1, 1);
         } else if (shapeDef.shapeName === 'regularPolygon') {
             currentShape = new Kinetic.RegularPolygon(shapeDef.config);
             fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
