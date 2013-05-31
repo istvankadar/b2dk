@@ -283,6 +283,19 @@ $(document).ready(function(){
 
     }
 
+    // setup debug draw
+    var debug = true;
+    if (debug === true) {
+        var debugDraw = new Box2D.Dynamics.b2DebugDraw();
+        debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
+        debugDraw.SetDrawScale(30.0);
+        debugDraw.SetFillAlpha(0.5);
+        debugDraw.SetLineThickness(1.0);
+        debugDraw.SetFlags(Box2D.Dynamics.b2DebugDraw.e_shapeBit | Box2D.Dynamics.b2DebugDraw.e_jointBit);
+        world.SetDebugDraw(debugDraw);
+    }
+
+
     var anim = new Kinetic.Animation(function(frame) {
         update(layer, frame);
     }, layer);
@@ -434,20 +447,6 @@ $(document).ready(function(){
     //    console.log(e);
     //    throw ("Execution stopped.");
     // }
-
-
-
-    // setup debug draw
-    var debug = true;
-    if (debug === true) {
-        var debugDraw = new Box2D.Dynamics.b2DebugDraw();
-        debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
-        debugDraw.SetDrawScale(30.0);
-        debugDraw.SetFillAlpha(0.5);
-        debugDraw.SetLineThickness(1.0);
-        debugDraw.SetFlags(Box2D.Dynamics.b2DebugDraw.e_shapeBit | Box2D.Dynamics.b2DebugDraw.e_jointBit);
-        world.SetDebugDraw(debugDraw);
-    }
 
 
 });
