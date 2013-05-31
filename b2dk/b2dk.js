@@ -7,7 +7,6 @@ var scale = 30;
 
 $(document).ready(function(){
 
-    var shapeDragstart = function(e) {
     // Prepare Box2D world
     var world = new Box2D.Dynamics.b2World(
         new Box2D.Common.Math.b2Vec2(0, 1)    //gravity
@@ -23,6 +22,7 @@ $(document).ready(function(){
 
     var layer = new Kinetic.Layer();
     stage.add(layer);
+    B2dK.prototype.shapeDragstart = function(e) {
         var userData = this.body.GetUserData();
 
         if(userData.dragged === false) {
@@ -49,7 +49,7 @@ $(document).ready(function(){
         }
     }
 
-    var shapeDragend = function(e) {
+    B2dK.prototype.shapeDragend = function(e) {
 
         var userData = this.body.GetUserData();
         userData.dragged = false;
@@ -65,7 +65,7 @@ $(document).ready(function(){
         this.body.SetUserData(userData);
     }
 
-    var shapeDragmove = function(e) {
+    B2dK.prototype.shapeDragmove = function(e) {
 
         var userData = this.body.GetUserData();
 
@@ -190,9 +190,9 @@ $(document).ready(function(){
             throw "Unknown shape: " + shapeDef.shapeName;
         }
 
-        currentShape.on('dragstart touchstart', shapeDragstart);
-        currentShape.on('dragend touchend', shapeDragend);
-        currentShape.on('dragmove touchmove', shapeDragmove);
+        currentShape.on('dragstart touchstart', B2dK.prototype.shapeDragstart);
+        currentShape.on('dragend touchend',     B2dK.prototype.shapeDragend);
+        currentShape.on('dragmove touchmove',   B2dK.prototype.shapeDragmove);
 
         currentBody.CreateFixture(fixDef);
 
