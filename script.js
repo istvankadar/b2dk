@@ -9,7 +9,7 @@ $(document).ready(function(){
 
 
     // Public defaults
-    var defaultStrokeWidth = 8;
+    var defaultStrokeWidth = 4;
 
     // try  {
 
