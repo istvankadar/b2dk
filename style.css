@@ -1,0 +1,24 @@
+body{
+    margin: 0px;
+}
+
+div {
+    background-color: #660066;
+    margin: 10px;
+    border: 5px solid black;
+}
+
+#kinetic-container {
+    border: 0px none black;
+    /*height: 450px;*/
+    /*background-color: #22f;*/
+    margin: 0px;
+    margin-bottom: 20px;
+    float: left;
+    /*width: 700px;*/
+}
+
+.kineticjs-content {
+    border: 0px none black;
+    margin: 0px;
+}
