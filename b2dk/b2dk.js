@@ -22,6 +22,28 @@ $(document).ready(function(){
 
     var layer = new Kinetic.Layer();
     stage.add(layer);
+
+
+    // B2dK is the class that binds Box2d and Kinetic classes together
+    function B2dK(shape, body){
+
+        shape.body = body;
+
+        body.SetUserData({
+            shape: shape
+            , dragged: false
+            , mouseJoint: null
+            , dragX: null
+            , dragY: null
+        });
+
+        this.shape = shape;
+        this.body  = body;
+    }
+
+    B2dK.prototype.body  = null;
+    B2dK.prototype.shape = null;
+
     B2dK.prototype.shapeDragstart = function(e) {
         var userData = this.body.GetUserData();
 
@@ -74,31 +96,6 @@ $(document).ready(function(){
 
         this.body.SetUserData(userData);
     }
-
-
-
-
-
-    // B2dK is the class that binds Box2d and Kinetic classes together
-    function B2dK(shape, body){
-
-        shape.body = body;
-
-        body.SetUserData({
-            shape: shape
-            , dragged: false
-            , mouseJoint: null
-            , dragX: null
-            , dragY: null
-        });
-
-        this.shape = shape;
-        this.body  = body;
-    }
-
-    B2dK.prototype.body  = null;
-    B2dK.prototype.shape = null;
-
 
     /**
     *
