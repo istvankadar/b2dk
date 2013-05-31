@@ -142,6 +142,39 @@ $(document).ready(function(){
     // Put on the layer
     layer.add(d.shape);
 
+
+    // Create a new B2DK object
+    var e = new B2dKFactory({
+        shapeName: 'rect',
+        config: {
+            cornerRadius: 5,
+            width: 60,
+            height: 60,
+            x: 12,
+            y: 5,
+            fill: '#aaaa00',
+            stroke: 'black',
+            strokeWidth: defaultStrokeWidth,
+            draggable: true
+        },
+        fixDef: {
+            density:  0.1,
+            friction:  0.6,
+            restitution:  0.5,
+        }
+    });
+
+    // TODO: make it simpler
+    // Set name to 'DDD'
+    ud = e.body.GetUserData();
+    ud.objName = 'EEE';
+    e.body.SetUserData(ud);
+
+    // Put on the layer
+    layer.add(e.shape);
+
+
+
     // b = new B2dKFactory({ shapeName: 'rect', config: { radius: 1, x: 100, y, 100 }});
     // c = new B2dKFactory({ shapeName: 'circlex', config: { radius: 1 }});
     // } catch (e) {
