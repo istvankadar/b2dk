@@ -238,6 +238,61 @@ $(document).ready(function(){
     var deskBorderThickness = 0.5;
     createDesk($("#kinetic-container"), deskBorderThickness);
 
+
+
+
+
+    // Main update function, called by Kinetic.Animation
+    function update(a, b) {
+
+        // Iterate over all bodies in he world
+        // TODO: Optimize it to iterate over only B2DK objects
+        var currentBody = world.GetBodyList();
+        var currentUserData;
+
+        while (currentBody !== null) {
+
+            if ( (currentUserData = currentBody.GetUserData()) !== null) {
+
+                // TODO: check if it is a B2DK object
+                if (true) {
+                    if( currentUserData.dragged === true ) {
+                        // Move the body onto the dragged Kinematic shape position
+                        currentUserData.mouseJoint.SetTarget(new Box2D.Common.Math.b2Vec2(currentUserData.dragX, currentUserData.dragY));
+                    }
+
+                    if (currentUserData.shape !== undefined) {
+                        // Position the Kinematic shape onto the body
+                        var wp = currentBody.GetWorldPoint({x:0, y:0});
+                        currentUserData.shape.setY(wp.y * scale);
+                        currentUserData.shape.setX(wp.x * scale);
+                    };
+                };
+
+            }
+            currentBody = currentBody.GetNext();
+        }
+
+        world.Step(1 / fps, 10, 10);
+
+        if (debug === true) {
+            world.DrawDebugData();
+        }
+
+        world.ClearForces();
+
+    }
+
+    var anim = new Kinetic.Animation(function(frame) {
+        update(layer, frame);
+    }, layer);
+
+    anim.start();
+
+
+
+
+
     // Public defaults
     var defaultStrokeWidth = 8;
     var fps = 60;
@@ -380,51 +435,6 @@ $(document).ready(function(){
     //    throw ("Execution stopped.");
     // }
 
-    var prevX = 0, prevY = 0;
-    function update(a, b) {
-
-        // Iterate over all bodies in he world
-        var currentBody = world.GetBodyList();
-        var currentUserData;
-
-        while (currentBody !== null) {
-
-            if ( (currentUserData = currentBody.GetUserData()) !== null) {
-
-                // TODO: check if it is a B2DK object
-                if (true) {
-                    if( currentUserData.dragged === true ) {
-                        currentUserData.mouseJoint.SetTarget(new Box2D.Common.Math.b2Vec2(currentUserData.dragX, currentUserData.dragY));
-                    }
-
-                    if (currentUserData.shape !== undefined) {
-                        var wp = currentBody.GetWorldPoint({x:0, y:0});
-                        currentUserData.shape.setY(wp.y * scale);
-                        currentUserData.shape.setX(wp.x * scale);
-                    };
-                };
-
-            }
-            currentBody = currentBody.GetNext();
-        }
-
-        world.Step(1 / fps, 10, 10);
-
-        if (debug === true) {
-            world.DrawDebugData();
-        }
-
-        world.ClearForces();
-
-    }
-
-
-
-    var anim = new Kinetic.Animation(function(frame) {
-        update(layer, frame);
-    }, layer);
-
-    anim.start();
 
 
     // setup debug draw
