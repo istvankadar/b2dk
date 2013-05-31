@@ -233,6 +233,40 @@ $(document).ready(function(){
     layer.add(f.shape);
 
 
+    // Create a new B2DK object
+    var g = new B2dKFactory({
+        shapeName: 'rect',
+        config: {
+            cornerRadius: 5,
+            width: 40,
+            height: 40,
+            x:  14,
+            y: 1.5,
+            fill: '#aa00aa',
+            stroke: 'black',
+            strokeWidth: defaultStrokeWidth,
+            draggable: true,
+            shadowColor: 'black',
+            shadowBlur: defaultShadowBlur,
+            shadowOffset: defaultShadowOffset,
+            shadowOpacity: defaultShadowOpacity
+        },
+        fixDef: {
+            density:  0.1,
+            friction:  0.6,
+            restitution:  0.5,
+        }
+    });
+
+    // TODO: make it simpler
+    // Set name to 'DDD'
+    ud = g.body.GetUserData();
+    ud.objName = 'GGG';
+    g.body.SetUserData(ud);
+
+    // Put on the layer
+    layer.add(g.shape);
+
 
     // b = new B2dKFactory({ shapeName: 'rect', config: { radius: 1, x: 100, y, 100 }});
     // c = new B2dKFactory({ shapeName: 'circlex', config: { radius: 1 }});
