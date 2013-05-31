@@ -387,16 +387,24 @@ $(document).ready(function(){
         var currentBody = world.GetBodyList();
         var currentUserData;
 
-        while (currentBody !== null && (currentUserData = currentBody.GetUserData()) !== null ) {
+        while (currentBody !== null) {
 
-            if( currentUserData.dragged === true ) {
-                currentUserData.mouseJoint.SetTarget(new Box2D.Common.Math.b2Vec2(currentUserData.dragX, currentUserData.dragY));
+            if ( (currentUserData = currentBody.GetUserData()) !== null) {
+
+                // TODO: check if it is a B2DK object
+                if (true) {
+                    if( currentUserData.dragged === true ) {
+                        currentUserData.mouseJoint.SetTarget(new Box2D.Common.Math.b2Vec2(currentUserData.dragX, currentUserData.dragY));
+                    }
+
+                    if (currentUserData.shape !== undefined) {
+                        var wp = currentBody.GetWorldPoint({x:0, y:0});
+                        currentUserData.shape.setY(wp.y * scale);
+                        currentUserData.shape.setX(wp.x * scale);
+                    };
+                };
+
             }
-
-            var wp = currentBody.GetWorldPoint({x:0, y:0});
-            currentUserData.shape.setY(wp.y * scale);
-            currentUserData.shape.setX(wp.x * scale);
-
             currentBody = currentBody.GetNext();
         }
 
