@@ -234,13 +234,6 @@ $(document).ready(function(){
     }
 
 
-    // Create desk
-    var deskBorderThickness = 0.5;
-    createDesk($("#kinetic-container"), deskBorderThickness);
-
-
-
-
 
     // Main update function, called by Kinetic.Animation
     function update(a, b) {
@@ -303,7 +296,11 @@ $(document).ready(function(){
     anim.start();
 
 
+    // Start adding objects to world
 
+    // Create desk
+    var deskBorderThickness = 0.5;
+    createDesk($("#kinetic-container"), deskBorderThickness);
 
 
     // Public defaults
