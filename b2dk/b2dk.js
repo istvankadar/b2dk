@@ -234,12 +234,17 @@ $(document).ready(function(){
     }
 
 
+    // Create desk
     var deskBorderThickness = 0.5;
     createDesk($("#kinetic-container"), deskBorderThickness);
 
+    // Public defaults
     var defaultStrokeWidth = 8;
+    var fps = 60;
 
     // try  {
+
+    // Create a new B2DK object
     a = new B2dKFactory({
         shapeName: 'circle',
         config: {
@@ -258,11 +263,16 @@ $(document).ready(function(){
         }
     });
 
+    // TODO: make it simpler
+    // Set name to 'AAA'
     ud = a.body.GetUserData();
     ud.objName = 'AAA';
     a.body.SetUserData(ud);
+
+    // Put on the layer
     layer.add(a.shape);
 
+    // Create a new B2DK object
     b = new B2dKFactory({
         shapeName: 'circle',
         config: {
@@ -280,9 +290,13 @@ $(document).ready(function(){
             restitution:  0.5,
         }
     });
+    // TODO: make it simpler
+    // Set name to 'BBB'
     ud = b.body.GetUserData();
     ud.objName = 'BBB';
     b.body.SetUserData(ud);
+
+    // Put on the layer
     layer.add(b.shape);
 
 
@@ -303,6 +317,7 @@ $(document).ready(function(){
     */
 
 
+    // Create a new B2DK object
     c = new B2dKFactory({
         shapeName: 'circle',
         config: {
@@ -321,11 +336,16 @@ $(document).ready(function(){
         }
     });
 
+    // TODO: make it simpler
+    // Set name to 'CCC'
     ud = c.body.GetUserData();
     ud.objName = 'CCC';
     c.body.SetUserData(ud);
+
+    // Put on the layer
     layer.add(c.shape);
 
+    // Create a new B2DK object
     d = new B2dKFactory({
         shapeName: 'circle',
         config: {
@@ -344,74 +364,40 @@ $(document).ready(function(){
         }
     });
 
-
+    // TODO: make it simpler
+    // Set name to 'DDD'
     ud = d.body.GetUserData();
     ud.objName = 'DDD';
     d.body.SetUserData(ud);
+
+    // Put on the layer
     layer.add(d.shape);
 
-       // b = new B2dKFactory({ shapeName: 'rect', config: { radius: 1, x: 100, y, 100 }});
-       // c = new B2dKFactory({ shapeName: 'circlex', config: { radius: 1 }});
+    // b = new B2dKFactory({ shapeName: 'rect', config: { radius: 1, x: 100, y, 100 }});
+    // c = new B2dKFactory({ shapeName: 'circlex', config: { radius: 1 }});
     // } catch (e) {
     //    console.log(e);
     //    throw ("Execution stopped.");
     // }
 
-    // console.log(a);
-    // console.log(b);
-
-
-    var fps = 60;
-    var intervalID = window.setInterval(update, 1000 / fps);
-
-
     var prevX = 0, prevY = 0;
-    // var stopper = 0;
-    function update() {
+    function update(a, b) {
 
         var currentBody = world.GetBodyList();
         var currentUserData;
 
         while (currentBody !== null && (currentUserData = currentBody.GetUserData()) !== null ) {
 
-            //console.log(currentUserData.dragged);
-
-
             if( currentUserData.dragged === true ) {
-                // dx = prevX - currentUserData.dragX;
-                // dy = prevY - currentUserData.dragY;
-                //console.log(dx, dy);
-                // prevX = currentUserData.dragX;
-                // prevY = currentUserData.dragY;
-             currentUserData.mouseJoint.SetTarget(new Box2D.Common.Math.b2Vec2(currentUserData.dragX, currentUserData.dragY));
+                currentUserData.mouseJoint.SetTarget(new Box2D.Common.Math.b2Vec2(currentUserData.dragX, currentUserData.dragY));
             }
 
-
             var wp = currentBody.GetWorldPoint({x:0, y:0});
-            // if (currentBody.GetUserData().objName === 'AAA') {
-            //    if (stopper < 10) {
-            //       console.log(currentBody);
-            //       console.log(wp.x, wp.y);
-            //       stopper ++;
-            //    } else {
-            //       window.clearInterval(intervalID);
-            //    }
-            // };
-
-
-            // currentUserData.shape.attrs.wpx = wp.x * scale;
-            // currentUserData.shape.attrs.wpy = wp.y * scale;
-            // console.log("SET");
             currentUserData.shape.setY(wp.y * scale);
             currentUserData.shape.setX(wp.x * scale);
 
             currentBody = currentBody.GetNext();
         }
-
-        // console.log("DRAW");
-
-        //               layer.draw();
-
 
         world.Step(1 / fps, 10, 10);
 
@@ -445,5 +431,4 @@ $(document).ready(function(){
     }
 
 
-    // console.log(c);
 });
