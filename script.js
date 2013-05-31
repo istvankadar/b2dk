@@ -10,6 +10,9 @@ $(document).ready(function(){
 
     // Public defaults
     var defaultStrokeWidth = 4;
+    var defaultShadowBlur = 10;
+    var defaultShadowOffset = 8;
+    var defaultShadowOpacity = 0.5;
 
     // try  {
 
@@ -23,7 +26,11 @@ $(document).ready(function(){
             fill: 'red',
             stroke: 'black',
             strokeWidth: defaultStrokeWidth,
-            draggable: true
+            draggable: true,
+            shadowColor: 'black',
+            shadowBlur: defaultShadowBlur,
+            shadowOffset: defaultShadowOffset,
+            shadowOpacity: defaultShadowOpacity
         },
         fixDef: {
             density:  0.1,
@@ -51,7 +58,11 @@ $(document).ready(function(){
             fill: '#00aa00',
             stroke: 'black',
             strokeWidth: defaultStrokeWidth,
-            draggable: true
+            draggable: true,
+            shadowColor: 'black',
+            shadowBlur: defaultShadowBlur,
+            shadowOffset: defaultShadowOffset,
+            shadowOpacity: defaultShadowOpacity
         },
         fixDef: {
             density:  0.1,
@@ -96,7 +107,11 @@ $(document).ready(function(){
             fill: '#0000aa',
             stroke: 'black',
             strokeWidth: defaultStrokeWidth,
-            draggable: true
+            draggable: true,
+            shadowColor: 'black',
+            shadowBlur: defaultShadowBlur,
+            shadowOffset: defaultShadowOffset,
+            shadowOpacity: defaultShadowOpacity
         },
         fixDef: {
             density:  0.1,
@@ -124,7 +139,11 @@ $(document).ready(function(){
             fill: '#aaaa00',
             stroke: 'black',
             strokeWidth: defaultStrokeWidth,
-            draggable: true
+            draggable: true,
+            shadowColor: 'black',
+            shadowBlur: defaultShadowBlur,
+            shadowOffset: defaultShadowOffset,
+            shadowOpacity: defaultShadowOpacity
         },
         fixDef: {
             density:  0.1,
@@ -155,7 +174,11 @@ $(document).ready(function(){
             fill: '#aaaa00',
             stroke: 'black',
             strokeWidth: defaultStrokeWidth,
-            draggable: true
+            draggable: true,
+            shadowColor: 'black',
+            shadowBlur: defaultShadowBlur,
+            shadowOffset: defaultShadowOffset,
+            shadowOpacity: defaultShadowOpacity
         },
         fixDef: {
             density:  0.1,
@@ -187,7 +210,11 @@ $(document).ready(function(){
             fill: '#aa00aa',
             stroke: 'black',
             strokeWidth: defaultStrokeWidth,
-            draggable: true
+            draggable: true,
+            shadowColor: 'black',
+            shadowBlur: defaultShadowBlur,
+            shadowOffset: defaultShadowOffset,
+            shadowOpacity: defaultShadowOpacity
         },
         fixDef: {
             density:  0.1,
