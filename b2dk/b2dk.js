@@ -279,7 +279,7 @@ $(document).ready(function(){
     if (debug === true) {
         var debugDraw = new Box2D.Dynamics.b2DebugDraw();
         debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
-        debugDraw.SetDrawScale(30.0);
+        debugDraw.SetDrawScale(scale);
         debugDraw.SetFillAlpha(0.5);
         debugDraw.SetLineThickness(1.0);
         debugDraw.SetFlags(Box2D.Dynamics.b2DebugDraw.e_shapeBit | Box2D.Dynamics.b2DebugDraw.e_jointBit);
