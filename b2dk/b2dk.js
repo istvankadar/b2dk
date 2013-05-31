@@ -253,10 +253,12 @@ $(document).ready(function(){
                     }
 
                     if (currentUserData.shape !== undefined) {
-                        // Position the Kinematic shape onto the body
+
+                        // Position and rotate the Kinematic shape onto the body
                         var wp = currentBody.GetWorldPoint({x:0, y:0});
                         currentUserData.shape.setY(wp.y * scale);
                         currentUserData.shape.setX(wp.x * scale);
+                        currentUserData.shape.setRotation(currentBody.GetAngle());
                     };
                 };
 
