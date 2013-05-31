@@ -268,8 +268,6 @@ $(document).ready(function(){
     layer.add(g.shape);
 
 
-    // b = new B2dKFactory({ shapeName: 'rect', config: { radius: 1, x: 100, y, 100 }});
-    // c = new B2dKFactory({ shapeName: 'circlex', config: { radius: 1 }});
     // } catch (e) {
     //    console.log(e);
     //    throw ("Execution stopped.");
