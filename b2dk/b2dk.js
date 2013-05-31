@@ -86,44 +86,45 @@ var layer;
 
         if (shapeDef.shapeName === 'circle') {
             currentShape = new Kinetic.Circle(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(1);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'ellipse') {
             currentShape = new Kinetic.Ellipse(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'image') {
             currentShape = new Kinetic.Image(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'line') {
             currentShape = new Kinetic.Line(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'path') {
             currentShape = new Kinetic.Path(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'polygon') {
             currentShape = new Kinetic.Polygon(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'rect') {
             currentShape = new Kinetic.Rect(shapeDef.config);
             fixDef.shape = new Box2D.Collision.Shapes.b2PolygonShape;
-            fixDef.shape.SetAsBox(1, 1);
+            fixDef.shape.SetAsBox((shapeDef.config.width / 2) / scale, (shapeDef.config.height / 2) / scale);
+            currentShape.setOffset(shapeDef.config.width / 2, shapeDef.config.height / 2);
         } else if (shapeDef.shapeName === 'regularPolygon') {
             currentShape = new Kinetic.RegularPolygon(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'sprite') {
             currentShape = new Kinetic.Sprite(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'star') {
             currentShape = new Kinetic.Star(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'text') {
             currentShape = new Kinetic.Text(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'textPath') {
             currentShape = new Kinetic.TextPath(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else if (shapeDef.shapeName === 'wedge') {
             currentShape = new Kinetic.Wedge(shapeDef.config);
-            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius);
+            fixDef.shape = new Box2D.Collision.Shapes.b2CircleShape(shapeDef.config.radius / scale);
         } else {
             throw "Unknown shape: " + shapeDef.shapeName;
         }
