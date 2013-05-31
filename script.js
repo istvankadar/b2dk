@@ -1,150 +1,155 @@
+var a;
+var b;
+var c;
+var d;
+
 $(document).ready(function(){
 
-// Start adding objects to world
+    // Start adding objects to world
 
-// Create desk
-var deskBorderThickness = 0.5;
-createDesk($("#kinetic-container"), deskBorderThickness);
-
-
-// Public defaults
-var defaultStrokeWidth = 8;
-
-// try  {
-
-// Create a new B2DK object
-a = new B2dKFactory({
-    shapeName: 'circle',
-    config: {
-        radius: 40,
-        x: 5,
-        y: 5,
-        fill: 'red',
-        stroke: 'black',
-        strokeWidth: defaultStrokeWidth,
-        draggable: true
-    },
-    fixDef: {
-        density:  0.1,
-        friction:  0.6,
-        restitution:  0.5,
-    }
-});
-
-// TODO: make it simpler
-// Set name to 'AAA'
-ud = a.body.GetUserData();
-ud.objName = 'AAA';
-a.body.SetUserData(ud);
-
-// Put on the layer
-layer.add(a.shape);
-
-// Create a new B2DK object
-b = new B2dKFactory({
-    shapeName: 'circle',
-    config: {
-        radius: 30,
-        x: 8,
-        y: 8,
-        fill: '#00aa00',
-        stroke: 'black',
-        strokeWidth: defaultStrokeWidth,
-        draggable: true
-    },
-    fixDef: {
-        density:  0.1,
-        friction:  0.6,
-        restitution:  0.5,
-    }
-});
-// TODO: make it simpler
-// Set name to 'BBB'
-ud = b.body.GetUserData();
-ud.objName = 'BBB';
-b.body.SetUserData(ud);
-
-// Put on the layer
-layer.add(b.shape);
+    // Create desk
+    var deskBorderThickness = 0.5;
+    createDesk($("#kinetic-container"), deskBorderThickness);
 
 
+    // Public defaults
+    var defaultStrokeWidth = 8;
 
-var jointDef = new Box2D.Dynamics.Joints.b2DistanceJointDef();
-jointDef.bodyA = a.body;
-jointDef.bodyB = b.body;
-jointDef.anchorPoint = a.body.GetWorldCenter();
-jointDef.length = 3;
+    // try  {
 
-var joint = world.CreateJoint(jointDef);
+    // Create a new B2DK object
+    a = new B2dKFactory({
+        shapeName: 'circle',
+        config: {
+            radius: 40,
+            x: 5,
+            y: 5,
+            fill: 'red',
+            stroke: 'black',
+            strokeWidth: defaultStrokeWidth,
+            draggable: true
+        },
+        fixDef: {
+            density:  0.1,
+            friction:  0.6,
+            restitution:  0.5,
+        }
+    });
 
-/*
-b2RevoluteJoint* joint = (b2RevoluteJoint*)myWorld->CreateJoint(&jointDef);
-... do stuff ...
-myWorld->DestroyJoint(joint);
-joint = NULL;
-*/
+    // TODO: make it simpler
+    // Set name to 'AAA'
+    ud = a.body.GetUserData();
+    ud.objName = 'AAA';
+    a.body.SetUserData(ud);
+
+    // Put on the layer
+    layer.add(a.shape);
+
+    // Create a new B2DK object
+    b = new B2dKFactory({
+        shapeName: 'circle',
+        config: {
+            radius: 30,
+            x: 8,
+            y: 8,
+            fill: '#00aa00',
+            stroke: 'black',
+            strokeWidth: defaultStrokeWidth,
+            draggable: true
+        },
+        fixDef: {
+            density:  0.1,
+            friction:  0.6,
+            restitution:  0.5,
+        }
+    });
+    // TODO: make it simpler
+    // Set name to 'BBB'
+    ud = b.body.GetUserData();
+    ud.objName = 'BBB';
+    b.body.SetUserData(ud);
+
+    // Put on the layer
+    layer.add(b.shape);
 
 
-// Create a new B2DK object
-c = new B2dKFactory({
-    shapeName: 'circle',
-    config: {
-        radius: 30,
-        x: 5,
-        y: 8,
-        fill: '#0000aa',
-        stroke: 'black',
-        strokeWidth: defaultStrokeWidth,
-        draggable: true
-    },
-    fixDef: {
-        density:  0.1,
-        friction:  0.6,
-        restitution:  0.5,
-    }
-});
 
-// TODO: make it simpler
-// Set name to 'CCC'
-ud = c.body.GetUserData();
-ud.objName = 'CCC';
-c.body.SetUserData(ud);
+    var jointDef = new Box2D.Dynamics.Joints.b2DistanceJointDef();
+    jointDef.bodyA = a.body;
+    jointDef.bodyB = b.body;
+    jointDef.anchorPoint = a.body.GetWorldCenter();
+    jointDef.length = 3;
 
-// Put on the layer
-layer.add(c.shape);
+    var joint = world.CreateJoint(jointDef);
 
-// Create a new B2DK object
-d = new B2dKFactory({
-    shapeName: 'circle',
-    config: {
-        radius: 30,
-        x: 8,
-        y: 5,
-        fill: '#aaaa00',
-        stroke: 'black',
-        strokeWidth: defaultStrokeWidth,
-        draggable: true
-    },
-    fixDef: {
-        density:  0.1,
-        friction:  0.6,
-        restitution:  0.5,
-    }
-});
+    /*
+    b2RevoluteJoint* joint = (b2RevoluteJoint*)myWorld->CreateJoint(&jointDef);
+    ... do stuff ...
+    myWorld->DestroyJoint(joint);
+    joint = NULL;
+    */
 
-// TODO: make it simpler
-// Set name to 'DDD'
-ud = d.body.GetUserData();
-ud.objName = 'DDD';
-d.body.SetUserData(ud);
 
-// Put on the layer
-layer.add(d.shape);
+    // Create a new B2DK object
+    c = new B2dKFactory({
+        shapeName: 'circle',
+        config: {
+            radius: 30,
+            x: 5,
+            y: 8,
+            fill: '#0000aa',
+            stroke: 'black',
+            strokeWidth: defaultStrokeWidth,
+            draggable: true
+        },
+        fixDef: {
+            density:  0.1,
+            friction:  0.6,
+            restitution:  0.5,
+        }
+    });
 
-// b = new B2dKFactory({ shapeName: 'rect', config: { radius: 1, x: 100, y, 100 }});
-// c = new B2dKFactory({ shapeName: 'circlex', config: { radius: 1 }});
-// } catch (e) {
-//    console.log(e);
-//    throw ("Execution stopped.");
-// }
+    // TODO: make it simpler
+    // Set name to 'CCC'
+    ud = c.body.GetUserData();
+    ud.objName = 'CCC';
+    c.body.SetUserData(ud);
+
+    // Put on the layer
+    layer.add(c.shape);
+
+    // Create a new B2DK object
+    d = new B2dKFactory({
+        shapeName: 'circle',
+        config: {
+            radius: 30,
+            x: 8,
+            y: 5,
+            fill: '#aaaa00',
+            stroke: 'black',
+            strokeWidth: defaultStrokeWidth,
+            draggable: true
+        },
+        fixDef: {
+            density:  0.1,
+            friction:  0.6,
+            restitution:  0.5,
+        }
+    });
+
+    // TODO: make it simpler
+    // Set name to 'DDD'
+    ud = d.body.GetUserData();
+    ud.objName = 'DDD';
+    d.body.SetUserData(ud);
+
+    // Put on the layer
+    layer.add(d.shape);
+
+    // b = new B2dKFactory({ shapeName: 'rect', config: { radius: 1, x: 100, y, 100 }});
+    // c = new B2dKFactory({ shapeName: 'circlex', config: { radius: 1 }});
+    // } catch (e) {
+    //    console.log(e);
+    //    throw ("Execution stopped.");
+    // }
 });

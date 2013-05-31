@@ -1,7 +1,3 @@
-var a;
-var b;
-var c;
-var d;
 
 var scale = 30;
 var fps = 60;
