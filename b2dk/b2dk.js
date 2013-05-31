@@ -383,6 +383,7 @@ $(document).ready(function(){
     var prevX = 0, prevY = 0;
     function update(a, b) {
 
+        // Iterate over all bodies in he world
         var currentBody = world.GetBodyList();
         var currentUserData;
 
