@@ -4,97 +4,41 @@ var c;
 var d;
 
 var scale = 30;
+var fps = 60;
+var world;
+var layer;
 
-$(document).ready(function(){
+    function createDesk(container, thickness) {
 
-    // Prepare Box2D world
-    var world = new Box2D.Dynamics.b2World(
-        new Box2D.Common.Math.b2Vec2(0, 1)    //gravity
-        , true                                   //allow sleep
-    );
+        // Body and fixture defs for desk borders
+        var fixDef = new Box2D.Dynamics.b2FixtureDef;
+        fixDef.density = 0.1;
+        fixDef.friction = 0.6;
+        fixDef.restitution = 1;
+        fixDef.shape = new Box2D.Collision.Shapes.b2PolygonShape;
 
-    // Prepare Kinematic stage and layer
-    var stage = new Kinetic.Stage({
-        container: 'kinetic-container',
-        width: 1200,
-        height: 300
-    });
-
-    var layer = new Kinetic.Layer();
-    stage.add(layer);
+        var bodyDef = new Box2D.Dynamics.b2BodyDef;
+        bodyDef.type = Box2D.Dynamics.b2Body.b2_staticBody;
 
 
-    // B2dK is the class that binds Box2d and Kinetic classes together
-    function B2dK(shape, body){
+        // Horizontal borders
+        fixDef.shape.SetAsBox( ( ( (container.width() / 2) ) / scale), thickness / scale );
 
-        shape.body = body;
+        bodyDef.position.Set( ( (container.width() / 2) / scale), (0 - (thickness * 1) / scale) );
+        world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-        body.SetUserData({
-            shape: shape
-            , dragged: false
-            , mouseJoint: null
-            , dragX: null
-            , dragY: null
-        });
+        bodyDef.position.Set( ( (container.width() / 2) / scale), ( (container.height() + thickness ) / scale) );
+        world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-        this.shape = shape;
-        this.body  = body;
-    }
+        // Vertical borders
+        fixDef.shape.SetAsBox(thickness / scale, ( ( (container.height() / 2) ) / scale));
 
-    B2dK.prototype.body  = null;
-    B2dK.prototype.shape = null;
+        bodyDef.position.Set((0 - (thickness * 1) / scale), ( (container.height() / 2) / scale));
+        world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-    B2dK.prototype.shapeDragstart = function(e) {
-        var userData = this.body.GetUserData();
+        bodyDef.position.Set( ( (container.width() + thickness) / scale), ( (container.height() / 2) / scale));
+        world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-        if(userData.dragged === false) {
-
-            userData.dragged = true;
-            this.attrs.dragged = true;
-
-            userData.dragX = e.layerX / scale;
-            userData.dragY = e.layerY / scale;
-
-            var md = new Box2D.Dynamics.Joints.b2MouseJointDef();
-            md.bodyA = world.GetGroundBody();
-            md.bodyB = this.body;
-            md.target.Set(userData.dragX, userData.dragY);
-            md.collideConnected = true;
-            md.maxForce = 8000.0 * this.body.GetMass();
-            userData.mouseJoint = world.CreateJoint(md);
-            this.body.SetAwake(true);
-
-            this.setFill('blue');
-
-            this.body.SetUserData(userData);
-
-        }
-    }
-
-    B2dK.prototype.shapeDragend = function(e) {
-
-        var userData = this.body.GetUserData();
-        userData.dragged = false;
-        this.attrs.dragged = false;
-
-        world.DestroyJoint(userData.mouseJoint);
-        userData.mouseJoint = null;
-        userData.dragX = this.body.getX;
-        userData.dragY = this.body.getY;
-
-        this.setFill('red');
-
-        this.body.SetUserData(userData);
-    }
-
-    B2dK.prototype.shapeDragmove = function(e) {
-
-        var userData = this.body.GetUserData();
-
-        userData.dragX = e.layerX / scale;
-        userData.dragY = e.layerY / scale;
-
-        this.body.SetUserData(userData);
     }
 
     /**
@@ -197,38 +141,98 @@ $(document).ready(function(){
     }
 
 
-    function createDesk(container, thickness) {
+    // B2dK is the class that binds Box2d and Kinetic classes together
+    function B2dK(shape, body){
 
-        // Body and fixture defs for desk borders
-        var fixDef = new Box2D.Dynamics.b2FixtureDef;
-        fixDef.density = 0.1;
-        fixDef.friction = 0.6;
-        fixDef.restitution = 1;
-        fixDef.shape = new Box2D.Collision.Shapes.b2PolygonShape;
+        shape.body = body;
 
-        var bodyDef = new Box2D.Dynamics.b2BodyDef;
-        bodyDef.type = Box2D.Dynamics.b2Body.b2_staticBody;
+        body.SetUserData({
+            shape: shape
+            , dragged: false
+            , mouseJoint: null
+            , dragX: null
+            , dragY: null
+        });
 
-
-        // Horizontal borders
-        fixDef.shape.SetAsBox( ( ( (container.width() / 2) ) / scale), thickness / scale );
-
-        bodyDef.position.Set( ( (container.width() / 2) / scale), (0 - (thickness * 1) / scale) );
-        world.CreateBody(bodyDef).CreateFixture(fixDef);
-
-        bodyDef.position.Set( ( (container.width() / 2) / scale), ( (container.height() + thickness ) / scale) );
-        world.CreateBody(bodyDef).CreateFixture(fixDef);
-
-        // Vertical borders
-        fixDef.shape.SetAsBox(thickness / scale, ( ( (container.height() / 2) ) / scale));
-
-        bodyDef.position.Set((0 - (thickness * 1) / scale), ( (container.height() / 2) / scale));
-        world.CreateBody(bodyDef).CreateFixture(fixDef);
-
-        bodyDef.position.Set( ( (container.width() + thickness) / scale), ( (container.height() / 2) / scale));
-        world.CreateBody(bodyDef).CreateFixture(fixDef);
-
+        this.shape = shape;
+        this.body  = body;
     }
+
+    B2dK.prototype.body  = null;
+    B2dK.prototype.shape = null;
+
+    B2dK.prototype.shapeDragstart = function(e) {
+        var userData = this.body.GetUserData();
+
+        if(userData.dragged === false) {
+
+            userData.dragged = true;
+            this.attrs.dragged = true;
+
+            userData.dragX = e.layerX / scale;
+            userData.dragY = e.layerY / scale;
+
+            var md = new Box2D.Dynamics.Joints.b2MouseJointDef();
+            md.bodyA = world.GetGroundBody();
+            md.bodyB = this.body;
+            md.target.Set(userData.dragX, userData.dragY);
+            md.collideConnected = true;
+            md.maxForce = 8000.0 * this.body.GetMass();
+            userData.mouseJoint = world.CreateJoint(md);
+            this.body.SetAwake(true);
+
+            this.setFill('blue');
+
+            this.body.SetUserData(userData);
+
+        }
+    }
+
+    B2dK.prototype.shapeDragend = function(e) {
+
+        var userData = this.body.GetUserData();
+        userData.dragged = false;
+        this.attrs.dragged = false;
+
+        world.DestroyJoint(userData.mouseJoint);
+        userData.mouseJoint = null;
+        userData.dragX = this.body.getX;
+        userData.dragY = this.body.getY;
+
+        this.setFill('red');
+
+        this.body.SetUserData(userData);
+    }
+
+    B2dK.prototype.shapeDragmove = function(e) {
+
+        var userData = this.body.GetUserData();
+
+        userData.dragX = e.layerX / scale;
+        userData.dragY = e.layerY / scale;
+
+        this.body.SetUserData(userData);
+    }
+
+
+
+$(document).ready(function(){
+
+    // Prepare Box2D world
+    world = new Box2D.Dynamics.b2World(
+        new Box2D.Common.Math.b2Vec2(0, 1)    //gravity
+        , true                                   //allow sleep
+    );
+
+    // Prepare Kinematic stage and layer
+    var stage = new Kinetic.Stage({
+        container: 'kinetic-container',
+        width: 1200,
+        height: 300
+    });
+
+    layer = new Kinetic.Layer();
+    stage.add(layer);
 
 
 
@@ -291,156 +295,5 @@ $(document).ready(function(){
     }, layer);
 
     anim.start();
-
-
-    // Start adding objects to world
-
-    // Create desk
-    var deskBorderThickness = 0.5;
-    createDesk($("#kinetic-container"), deskBorderThickness);
-
-
-    // Public defaults
-    var defaultStrokeWidth = 8;
-    var fps = 60;
-
-    // try  {
-
-    // Create a new B2DK object
-    a = new B2dKFactory({
-        shapeName: 'circle',
-        config: {
-            radius: 40,
-            x: 5,
-            y: 5,
-            fill: 'red',
-            stroke: 'black',
-            strokeWidth: defaultStrokeWidth,
-            draggable: true
-        },
-        fixDef: {
-            density:  0.1,
-            friction:  0.6,
-            restitution:  0.5,
-        }
-    });
-
-    // TODO: make it simpler
-    // Set name to 'AAA'
-    ud = a.body.GetUserData();
-    ud.objName = 'AAA';
-    a.body.SetUserData(ud);
-
-    // Put on the layer
-    layer.add(a.shape);
-
-    // Create a new B2DK object
-    b = new B2dKFactory({
-        shapeName: 'circle',
-        config: {
-            radius: 30,
-            x: 8,
-            y: 8,
-            fill: '#00aa00',
-            stroke: 'black',
-            strokeWidth: defaultStrokeWidth,
-            draggable: true
-        },
-        fixDef: {
-            density:  0.1,
-            friction:  0.6,
-            restitution:  0.5,
-        }
-    });
-    // TODO: make it simpler
-    // Set name to 'BBB'
-    ud = b.body.GetUserData();
-    ud.objName = 'BBB';
-    b.body.SetUserData(ud);
-
-    // Put on the layer
-    layer.add(b.shape);
-
-
-
-    var jointDef = new Box2D.Dynamics.Joints.b2DistanceJointDef();
-    jointDef.bodyA = a.body;
-    jointDef.bodyB = b.body;
-    jointDef.anchorPoint = a.body.GetWorldCenter();
-    jointDef.length = 3;
-
-    var joint = world.CreateJoint(jointDef);
-
-    /*
-    b2RevoluteJoint* joint = (b2RevoluteJoint*)myWorld->CreateJoint(&jointDef);
-    ... do stuff ...
-    myWorld->DestroyJoint(joint);
-    joint = NULL;
-    */
-
-
-    // Create a new B2DK object
-    c = new B2dKFactory({
-        shapeName: 'circle',
-        config: {
-            radius: 30,
-            x: 5,
-            y: 8,
-            fill: '#0000aa',
-            stroke: 'black',
-            strokeWidth: defaultStrokeWidth,
-            draggable: true
-        },
-        fixDef: {
-            density:  0.1,
-            friction:  0.6,
-            restitution:  0.5,
-        }
-    });
-
-    // TODO: make it simpler
-    // Set name to 'CCC'
-    ud = c.body.GetUserData();
-    ud.objName = 'CCC';
-    c.body.SetUserData(ud);
-
-    // Put on the layer
-    layer.add(c.shape);
-
-    // Create a new B2DK object
-    d = new B2dKFactory({
-        shapeName: 'circle',
-        config: {
-            radius: 30,
-            x: 8,
-            y: 5,
-            fill: '#aaaa00',
-            stroke: 'black',
-            strokeWidth: defaultStrokeWidth,
-            draggable: true
-        },
-        fixDef: {
-            density:  0.1,
-            friction:  0.6,
-            restitution:  0.5,
-        }
-    });
-
-    // TODO: make it simpler
-    // Set name to 'DDD'
-    ud = d.body.GetUserData();
-    ud.objName = 'DDD';
-    d.body.SetUserData(ud);
-
-    // Put on the layer
-    layer.add(d.shape);
-
-    // b = new B2dKFactory({ shapeName: 'rect', config: { radius: 1, x: 100, y, 100 }});
-    // c = new B2dKFactory({ shapeName: 'circlex', config: { radius: 1 }});
-    // } catch (e) {
-    //    console.log(e);
-    //    throw ("Execution stopped.");
-    // }
-
 
 });
