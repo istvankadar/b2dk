@@ -1,7 +1,3 @@
-var a;
-var b;
-var c;
-var d;
 
 $(document).ready(function(){
 
@@ -18,7 +14,7 @@ $(document).ready(function(){
     // try  {
 
     // Create a new B2DK object
-    a = new B2dKFactory({
+    var a = new B2dKFactory({
         shapeName: 'circle',
         config: {
             radius: 40,
@@ -46,7 +42,7 @@ $(document).ready(function(){
     layer.add(a.shape);
 
     // Create a new B2DK object
-    b = new B2dKFactory({
+    var b = new B2dKFactory({
         shapeName: 'circle',
         config: {
             radius: 30,
@@ -91,7 +87,7 @@ $(document).ready(function(){
 
 
     // Create a new B2DK object
-    c = new B2dKFactory({
+    var c = new B2dKFactory({
         shapeName: 'circle',
         config: {
             radius: 30,
@@ -119,7 +115,7 @@ $(document).ready(function(){
     layer.add(c.shape);
 
     // Create a new B2DK object
-    d = new B2dKFactory({
+    var d = new B2dKFactory({
         shapeName: 'circle',
         config: {
             radius: 30,
