@@ -8,6 +8,21 @@ var scale = 30;
 $(document).ready(function(){
 
     var shapeDragstart = function(e) {
+    // Prepare Box2D world
+    var world = new Box2D.Dynamics.b2World(
+        new Box2D.Common.Math.b2Vec2(0, 1)    //gravity
+        , true                                   //allow sleep
+    );
+
+    // Prepare Kinematic stage and layer
+    var stage = new Kinetic.Stage({
+        container: 'kinetic-container',
+        width: 1200,
+        height: 300
+    });
+
+    var layer = new Kinetic.Layer();
+    stage.add(layer);
         var userData = this.body.GetUserData();
 
         if(userData.dragged === false) {
@@ -60,21 +75,6 @@ $(document).ready(function(){
         this.body.SetUserData(userData);
     }
 
-
-    var world = new Box2D.Dynamics.b2World(
-        new Box2D.Common.Math.b2Vec2(0, 1)    //gravity
-        , true                                   //allow sleep
-    );
-
-
-    var stage = new Kinetic.Stage({
-        container: 'kinetic-container',
-        width: 1200,
-        height: 300
-    });
-
-    var layer = new Kinetic.Layer();
-    stage.add(layer);
 
 
 
