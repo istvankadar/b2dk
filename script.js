@@ -175,6 +175,38 @@ $(document).ready(function(){
 
 
 
+    // Create a new B2DK object
+    var f = new B2dKFactory({
+        shapeName: 'rect',
+        config: {
+            cornerRadius: 5,
+            width: 120,
+            height: 30,
+            x: 13,
+            y: 3,
+            fill: '#aa00aa',
+            stroke: 'black',
+            strokeWidth: defaultStrokeWidth,
+            draggable: true
+        },
+        fixDef: {
+            density:  0.1,
+            friction:  0.6,
+            restitution:  0.5,
+        }
+    });
+
+    // TODO: make it simpler
+    // Set name to 'DDD'
+    ud = f.body.GetUserData();
+    ud.objName = 'FFF';
+    f.body.SetUserData(ud);
+
+    // Put on the layer
+    layer.add(f.shape);
+
+
+
     // b = new B2dKFactory({ shapeName: 'rect', config: { radius: 1, x: 100, y, 100 }});
     // c = new B2dKFactory({ shapeName: 'circlex', config: { radius: 1 }});
     // } catch (e) {
