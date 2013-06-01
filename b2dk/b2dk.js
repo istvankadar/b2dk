@@ -78,7 +78,7 @@ var debug = false;
 
         var bodyDef = new Box2D.Dynamics.b2BodyDef;
         bodyDef.type = Box2D.Dynamics.b2Body.b2_dynamicBody;
-        bodyDef.fixedRotation = true;
+        bodyDef.fixedRotation = shapeDef.bodyDef.fixedRotation;
 
         console.log(shapeDef.config);
 

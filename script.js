@@ -36,6 +36,9 @@ $(document).ready(function(){
             density:  0.1,
             friction:  0.6,
             restitution:  0.5,
+        },
+        bodyDef: {
+            fixedRotation: false
         }
     });
 
@@ -68,6 +71,9 @@ $(document).ready(function(){
             density:  0.1,
             friction:  0.6,
             restitution:  0.5,
+        },
+        bodyDef: {
+            fixedRotation: false
         }
     });
     // TODO: make it simpler
@@ -117,6 +123,9 @@ $(document).ready(function(){
             density:  0.1,
             friction:  0.6,
             restitution:  0.5,
+        },
+        bodyDef: {
+            fixedRotation: false
         }
     });
 
@@ -149,6 +158,9 @@ $(document).ready(function(){
             density:  0.1,
             friction:  0.6,
             restitution:  0.5,
+        },
+        bodyDef: {
+            fixedRotation: false
         }
     });
 
@@ -184,6 +196,9 @@ $(document).ready(function(){
             density:  0.1,
             friction:  0.6,
             restitution:  0.5,
+        },
+        bodyDef: {
+            fixedRotation: false
         }
     });
 
@@ -220,6 +235,9 @@ $(document).ready(function(){
             density:  0.1,
             friction:  0.6,
             restitution:  0.5,
+        },
+        bodyDef: {
+            fixedRotation: true
         }
     });
 
@@ -255,6 +273,9 @@ $(document).ready(function(){
             density:  0.1,
             friction:  0.6,
             restitution:  0.5,
+        },
+        bodyDef: {
+            fixedRotation: false
         }
     });
 
