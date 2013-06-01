@@ -4,6 +4,8 @@ var fps = 60;
 var world;
 var layer;
 
+var debug = false;
+
     function createDesk(container, thickness) {
 
         // Body and fixture defs for desk borders
@@ -278,7 +280,6 @@ $(document).ready(function(){
     }
 
     // setup debug draw
-    var debug = true;
     if (debug === true) {
         var debugDraw = new Box2D.Dynamics.b2DebugDraw();
         debugDraw.SetSprite(document.getElementById("canvas").getContext("2d"));
